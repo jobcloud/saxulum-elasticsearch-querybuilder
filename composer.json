@@ -1,5 +1,5 @@
 {
-  "name": "saxulum/saxulum-elasticsearch-querybuilder",
+  "name": "jobcloud/saxulum-elasticsearch-querybuilder",
   "type": "library",
   "description": "A query builder for elasticsearch",
   "keywords": ["elasticsearch", "querybuilder", "query"],
@@ -11,7 +11,7 @@
     }
   ],
   "require": {
-    "php": "~7.0"
+    "php": "~7.0|^8.1"
   },
   "require-dev": {
     "phpunit/phpunit": "^6.5.8"

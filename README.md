@@ -12,7 +12,7 @@
 
 ## Requirements
 
- * php: ~7.0
+ * php: ~7.0|^8.1
 
 ## Suggests
 
@@ -20,10 +20,8 @@
 
 ## Installation
 
-Through [Composer](http://getcomposer.org) as [saxulum/saxulum-elasticsearch-querybuilder][1].
-
 ```sh
-composer require saxulum/saxulum-elasticsearch-querybuilder "~3.3"
+composer require jobcloud/saxulum-elasticsearch-querybuilder "~3.3"
 ```
 
 ## Usage

@@ -6,17 +6,8 @@ namespace Saxulum\ElasticSearchQueryBuilder\Node;
 
 final class StringNode extends AbstractNode
 {
-    /**
-     * @var string|null
-     */
-    private $value;
+    private ?string $value;
 
-    /**
-     * @param string|null $value
-     * @param bool        $allowSerializeEmpty
-     *
-     * @return StringNode
-     */
     public static function create(string $value = null, bool $allowSerializeEmpty = false): StringNode
     {
         $node = new self();
@@ -28,13 +19,10 @@ final class StringNode extends AbstractNode
 
     public function serializeEmpty()
     {
-        return;
+        return null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function serialize()
+    public function serialize(): ?string
     {
         return $this->value;
     }

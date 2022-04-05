@@ -6,17 +6,8 @@ namespace Saxulum\ElasticSearchQueryBuilder\Node;
 
 final class IntNode extends AbstractNode
 {
-    /**
-     * @var int|null
-     */
-    private $value;
+    private ?int $value;
 
-    /**
-     * @param int|null $value
-     * @param bool     $allowSerializeEmpty
-     *
-     * @return IntNode
-     */
     public static function create(int $value = null, bool $allowSerializeEmpty = false): IntNode
     {
         $node = new self();
@@ -28,13 +19,10 @@ final class IntNode extends AbstractNode
 
     public function serializeEmpty()
     {
-        return;
+        return null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function serialize()
+    public function serialize(): ?int
     {
         return $this->value;
     }

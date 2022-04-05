@@ -6,15 +6,9 @@ namespace Saxulum\ElasticSearchQueryBuilder\Node;
 
 abstract class AbstractNode
 {
-    /**
-     * @var AbstractParentNode
-     */
-    protected $parent;
+    protected ?AbstractParentNode $parent = null;
 
-    /**
-     * @var bool
-     */
-    protected $allowSerializeEmpty;
+    protected bool $allowSerializeEmpty;
 
     protected function __construct()
     {
@@ -26,8 +20,6 @@ abstract class AbstractNode
     }
 
     /**
-     * @param AbstractParentNode $parent
-     *
      * @throws \InvalidArgumentException
      */
     public function setParent(AbstractParentNode $parent)
@@ -39,17 +31,11 @@ abstract class AbstractNode
         $this->parent = $parent;
     }
 
-    /**
-     * @return AbstractParentNode|null
-     */
-    public function getParent()
+    public function getParent(): ?AbstractParentNode
     {
         return $this->parent;
     }
 
-    /**
-     * @return bool
-     */
     public function isAllowSerializeEmpty(): bool
     {
         return $this->allowSerializeEmpty;

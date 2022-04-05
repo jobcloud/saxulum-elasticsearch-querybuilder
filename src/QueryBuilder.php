@@ -18,15 +18,9 @@ use Saxulum\ElasticSearchQueryBuilder\Node\StringNode;
  */
 final class QueryBuilder implements QueryBuilderInterface
 {
-    /**
-     * @var ObjectNode
-     */
-    private $rootNode;
+    private ObjectNode $rootNode;
 
-    /**
-     * @var AbstractNode
-     */
-    private $node;
+    private ?AbstractNode $node;
 
     public function __construct()
     {
@@ -37,10 +31,6 @@ final class QueryBuilder implements QueryBuilderInterface
     }
 
     /**
-     * @param array ...$arguments
-     *
-     * @return QueryBuilderInterface
-     *
      * @throws \Exception
      */
     public function add(...$arguments): QueryBuilderInterface
@@ -53,10 +43,6 @@ final class QueryBuilder implements QueryBuilderInterface
     }
 
     /**
-     * @param AbstractNode $node
-     *
-     * @return QueryBuilderInterface
-     *
      * @throws \Exception
      */
     public function addToArrayNode(AbstractNode $node): QueryBuilderInterface
@@ -72,11 +58,6 @@ final class QueryBuilder implements QueryBuilderInterface
     }
 
     /**
-     * @param string       $key
-     * @param AbstractNode $node
-     *
-     * @return QueryBuilderInterface
-     *
      * @throws \Exception
      */
     public function addToObjectNode(string $key, AbstractNode $node): QueryBuilderInterface
@@ -91,10 +72,7 @@ final class QueryBuilder implements QueryBuilderInterface
         return $this;
     }
 
-    /**
-     * @param AbstractNode $node
-     */
-    private function reassignParent(AbstractNode $node)
+    private function reassignParent(AbstractNode $node): void
     {
         if ($node instanceof ArrayNode || $node instanceof ObjectNode) {
             $this->node = $node;
@@ -102,8 +80,6 @@ final class QueryBuilder implements QueryBuilderInterface
     }
 
     /**
-     * @return QueryBuilderInterface
-     *
      * @throws \Exception
      */
     public function end(): QueryBuilderInterface
@@ -115,91 +91,46 @@ final class QueryBuilder implements QueryBuilderInterface
         return $this;
     }
 
-    /**
-     * @param bool $allowSerializeEmpty
-     *
-     * @return ArrayNode
-     */
     public function arrayNode(bool $allowSerializeEmpty = false): ArrayNode
     {
         return ArrayNode::create($allowSerializeEmpty);
     }
 
-    /**
-     * @param bool|null $value
-     * @param bool      $allowSerializeEmpty
-     *
-     * @return BoolNode
-     */
     public function boolNode($value = null, bool $allowSerializeEmpty = false): BoolNode
     {
         return BoolNode::create($value, $allowSerializeEmpty);
     }
 
-    /**
-     * @param float|null $value
-     * @param bool       $allowSerializeEmpty
-     *
-     * @return FloatNode
-     */
     public function floatNode($value = null, bool $allowSerializeEmpty = false): FloatNode
     {
         return FloatNode::create($value, $allowSerializeEmpty);
     }
 
-    /**
-     * @param int|null $value
-     * @param bool     $allowSerializeEmpty
-     *
-     * @return IntNode
-     */
     public function intNode($value = null, bool $allowSerializeEmpty = false): IntNode
     {
         return IntNode::create($value, $allowSerializeEmpty);
     }
 
-    /**
-     * @return NullNode
-     */
     public function nullNode(): NullNode
     {
         return NullNode::create();
     }
 
-    /**
-     * @param bool $allowSerializeEmpty
-     *
-     * @return ObjectNode
-     */
     public function objectNode(bool $allowSerializeEmpty = false): ObjectNode
     {
         return ObjectNode::create($allowSerializeEmpty);
     }
 
-    /**
-     * @param string|null $value
-     * @param bool        $allowSerializeEmpty
-     *
-     * @return StringNode
-     */
-    public function stringNode($value = null, bool $allowSerializeEmpty = false): StringNode
+    public function stringNode(?string $value = null, bool $allowSerializeEmpty = false): StringNode
     {
         return StringNode::create($value, $allowSerializeEmpty);
     }
 
-    /**
-     * @return \stdClass|null
-     */
-    public function serialize()
+    public function serialize(): ?\stdClass
     {
         return $this->rootNode->serialize();
     }
 
-    /**
-     * @param bool $beautify
-     *
-     * @return string
-     */
     public function json(bool $beautify = false): string
     {
         if (null === $serialized = $this->serialize()) {

@@ -25,12 +25,11 @@ use Saxulum\ElasticSearchQueryBuilder\Node\StringNode;
  */
 class NodeTest extends TestCase
 {
-    public function testMatchAll()
+    public function testMatchAll(): void
     {
         $node = ObjectNode::create()
             ->add('query', ObjectNode::create()
-                ->add('match_all', ObjectNode::create(true))
-            );
+                ->add('match_all', ObjectNode::create(true)));
 
         $error = error_get_last();
 
@@ -39,12 +38,11 @@ class NodeTest extends TestCase
         self::assertSame('{"query":{"match_all":{}}}', $node->json());
     }
 
-    public function testMatchAllWithoutAllowSerializeEmpty()
+    public function testMatchAllWithoutAllowSerializeEmpty(): void
     {
         $node = ObjectNode::create()
             ->add('query', ObjectNode::create()
-                ->add('match_all', ObjectNode::create())
-            );
+                ->add('match_all', ObjectNode::create()));
 
         $error = error_get_last();
 
@@ -53,14 +51,12 @@ class NodeTest extends TestCase
         self::assertSame('', $node->json());
     }
 
-    public function testMatch()
+    public function testMatch(): void
     {
         $node = ObjectNode::create()
             ->add('query', ObjectNode::create()
                 ->add('match', ObjectNode::create()
-                    ->add('title', StringNode::create('elasticsearch'))
-                )
-            );
+                    ->add('title', StringNode::create('elasticsearch'))));
 
         $error = error_get_last();
 
@@ -69,17 +65,14 @@ class NodeTest extends TestCase
         self::assertSame('{"query":{"match":{"title":"elasticsearch"}}}', $node->json());
     }
 
-    public function testRange()
+    public function testRange(): void
     {
         $node = ObjectNode::create()
             ->add('query', ObjectNode::create()
                 ->add('range', ObjectNode::create()
                     ->add('elements', ObjectNode::create()
                         ->add('gte', IntNode::create(10))
-                        ->add('lte', IntNode::create(20))
-                    )
-                )
-            );
+                        ->add('lte', IntNode::create(20)))));
 
         $error = error_get_last();
 
@@ -88,14 +81,12 @@ class NodeTest extends TestCase
         self::assertSame('{"query":{"range":{"elements":{"gte":10,"lte":20}}}}', $node->json());
     }
 
-    public function testExists()
+    public function testExists(): void
     {
         $node = ObjectNode::create()
             ->add('query', ObjectNode::create()
                 ->add('exists', ObjectNode::create()
-                    ->add('field', StringNode::create('text'))
-                )
-            );
+                    ->add('field', StringNode::create('text'))));
 
         $error = error_get_last();
 
@@ -104,7 +95,7 @@ class NodeTest extends TestCase
         self::assertSame('{"query":{"exists":{"field":"text"}}}', $node->json());
     }
 
-    public function testNotExists()
+    public function testNotExists(): void
     {
         $node = ObjectNode::create()
             ->add('query', ObjectNode::create()
@@ -112,12 +103,7 @@ class NodeTest extends TestCase
                     ->add('must_not', ArrayNode::create()
                         ->add(ObjectNode::create()
                             ->add('exists', ObjectNode::create()
-                                ->add('field', StringNode::create('text'))
-                            )
-                        )
-                    )
-                )
-            );
+                                ->add('field', StringNode::create('text')))))));
 
         $error = error_get_last();
 
@@ -129,14 +115,12 @@ class NodeTest extends TestCase
         );
     }
 
-    public function testPrefix()
+    public function testPrefix(): void
     {
         $node = ObjectNode::create()
             ->add('query', ObjectNode::create()
                 ->add('prefix', ObjectNode::create()
-                    ->add('title', StringNode::create('elastic'))
-                )
-            );
+                    ->add('title', StringNode::create('elastic'))));
 
         $error = error_get_last();
 
@@ -145,14 +129,12 @@ class NodeTest extends TestCase
         self::assertSame('{"query":{"prefix":{"title":"elastic"}}}', $node->json());
     }
 
-    public function testWildcard()
+    public function testWildcard(): void
     {
         $node = ObjectNode::create()
             ->add('query', ObjectNode::create()
                 ->add('wildcard', ObjectNode::create()
-                    ->add('title', StringNode::create('ela*c'))
-                )
-            );
+                    ->add('title', StringNode::create('ela*c'))));
 
         $error = error_get_last();
 
@@ -161,14 +143,12 @@ class NodeTest extends TestCase
         self::assertSame('{"query":{"wildcard":{"title":"ela*c"}}}', $node->json());
     }
 
-    public function testRegexp()
+    public function testRegexp(): void
     {
         $node = ObjectNode::create()
             ->add('query', ObjectNode::create()
                 ->add('regexp', ObjectNode::create()
-                    ->add('title', StringNode::create('search$'))
-                )
-            );
+                    ->add('title', StringNode::create('search$'))));
 
         $error = error_get_last();
 
@@ -177,17 +157,14 @@ class NodeTest extends TestCase
         self::assertSame('{"query":{"regexp":{"title":"search$"}}}', $node->json());
     }
 
-    public function testFuzzy()
+    public function testFuzzy(): void
     {
         $node = ObjectNode::create()
             ->add('query', ObjectNode::create()
                 ->add('fuzzy', ObjectNode::create()
                     ->add('title', ObjectNode::create()
                         ->add('value', StringNode::create('sea'))
-                        ->add('fuzziness', IntNode::create(2))
-                    )
-                )
-            );
+                        ->add('fuzziness', IntNode::create(2)))));
 
         $error = error_get_last();
 
@@ -196,14 +173,12 @@ class NodeTest extends TestCase
         self::assertSame('{"query":{"fuzzy":{"title":{"value":"sea","fuzziness":2}}}}', $node->json());
     }
 
-    public function testType()
+    public function testType(): void
     {
         $node = ObjectNode::create()
             ->add('query', ObjectNode::create()
                 ->add('type', ObjectNode::create()
-                    ->add('value', StringNode::create('product'))
-                )
-            );
+                    ->add('value', StringNode::create('product'))));
 
         $error = error_get_last();
 
@@ -212,7 +187,7 @@ class NodeTest extends TestCase
         self::assertSame('{"query":{"type":{"value":"product"}}}', $node->json());
     }
 
-    public function testIds()
+    public function testIds(): void
     {
         $node = ObjectNode::create()
             ->add('query', ObjectNode::create()
@@ -220,10 +195,7 @@ class NodeTest extends TestCase
                     ->add('type', StringNode::create('product'))
                     ->add('values', ArrayNode::create()
                         ->add(IntNode::create(1))
-                        ->add(IntNode::create(2))
-                    )
-                )
-            );
+                        ->add(IntNode::create(2)))));
 
         $error = error_get_last();
 
@@ -232,14 +204,12 @@ class NodeTest extends TestCase
         self::assertSame('{"query":{"ids":{"type":"product","values":[1,2]}}}', $node->json());
     }
 
-    public function testBoolTerm()
+    public function testBoolTerm(): void
     {
         $node = ObjectNode::create()
             ->add('query', ObjectNode::create()
                 ->add('term', ObjectNode::create()
-                    ->add('is_published', BoolNode::create(true))
-                )
-            );
+                    ->add('is_published', BoolNode::create(true))));
 
         $error = error_get_last();
 
@@ -248,14 +218,12 @@ class NodeTest extends TestCase
         self::assertSame('{"query":{"term":{"is_published":true}}}', $node->json());
     }
 
-    public function testNullNode()
+    public function testNullNode(): void
     {
         $node = ObjectNode::create()
             ->add('query', ObjectNode::create()
                 ->add('term', ObjectNode::create()
-                    ->add('field', NullNode::create())
-                )
-            );
+                    ->add('field', NullNode::create())));
 
         $error = error_get_last();
 
@@ -264,45 +232,31 @@ class NodeTest extends TestCase
         self::assertSame('{"query":{"term":{"field":null}}}', $node->json());
     }
 
-    public function testComplex()
+    public function testComplex(): void
     {
         $node = ObjectNode::create()
             ->add('query', ObjectNode::create()
                 ->add('bool', ObjectNode::create()
                     ->add('must', ObjectNode::create()
                         ->add('term', ObjectNode::create()
-                            ->add('user', StringNode::create('kimchy'))
-                        )
-                    )
+                            ->add('user', StringNode::create('kimchy'))))
                     ->add('filter', ObjectNode::create()
                         ->add('term', ObjectNode::create()
-                            ->add('tag', StringNode::create('tech'))
-                        )
-                    )
+                            ->add('tag', StringNode::create('tech'))))
                     ->add('must_not', ObjectNode::create()
                         ->add('range', ObjectNode::create()
                             ->add('age', ObjectNode::create()
                                 ->add('from', IntNode::create(10))
-                                ->add('to', IntNode::create(20))
-                            )
-                        )
-                    )
+                                ->add('to', IntNode::create(20)))))
                     ->add('should', ArrayNode::create()
                         ->add(ObjectNode::create()
                             ->add('term', ObjectNode::create()
-                                ->add('tag', StringNode::create('wow'))
-                            )
-                        )
+                                ->add('tag', StringNode::create('wow'))))
                         ->add(ObjectNode::create()
                             ->add('term', ObjectNode::create()
-                                ->add('tag', StringNode::create('elasticsearch'))
-                            )
-                        )
-                    )
+                                ->add('tag', StringNode::create('elasticsearch')))))
                     ->add('minimum_should_match', IntNode::create(1))
-                    ->add('boost', FloatNode::create(1.1))
-                )
-            );
+                    ->add('boost', FloatNode::create(1.1))));
 
         $error = error_get_last();
 
@@ -361,13 +315,7 @@ EOD;
                         ->add(ObjectNode::create()
                             ->add('terms', ObjectNode::create()
                                 ->add('field', ArrayNode::create()
-                                    ->add(StringNode::create())
-                                )
-                            )
-                        )
-                    )
-                )
-            );
+                                    ->add(StringNode::create())))))));
 
         $error = error_get_last();
 
@@ -376,7 +324,7 @@ EOD;
         self::assertSame('', $node->json());
     }
 
-    public function testArrayNodeWithAllowEmptySerializeChild()
+    public function testArrayNodeWithAllowEmptySerializeChild(): void
     {
         $node = ArrayNode::create()
             ->add(StringNode::create(null, true));
@@ -384,7 +332,7 @@ EOD;
         self::assertSame([null], $node->serialize());
     }
 
-    public function testClone()
+    public function testClone(): void
     {
         $stringNode = StringNode::create('value');
 
@@ -420,20 +368,20 @@ EOD;
         self::assertNotSame($stringNode, $stringNodeClone2);
     }
 
-    public function testDuplicateKeyOnObjectNode()
+    public function testDuplicateKeyOnObjectNode(): void
     {
-        self::expectException(\InvalidArgumentException::class);
-        self::expectExceptionMessage('There is already a node with key name!');
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('There is already a node with key name!');
 
         ObjectNode::create()
             ->add('name', StringNode::create())
             ->add('name', StringNode::create());
     }
 
-    public function testAssignSameNodeTwice()
+    public function testAssignSameNodeTwice(): void
     {
-        self::expectException(\InvalidArgumentException::class);
-        self::expectExceptionMessage('Node already got a parent!');
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Node already got a parent!');
 
         $childNode = StringNode::create();
 
@@ -442,7 +390,7 @@ EOD;
             ->add($childNode);
     }
 
-    public function testGetParentNode()
+    public function testGetParentNode(): void
     {
         $childNode = StringNode::create();
 

@@ -9,7 +9,7 @@ use Saxulum\ElasticSearchQueryBuilder\Node\AbstractParentNode;
 interface IteratableToNodeConverterInterface
 {
     /**
-     * @param array|\Traversable $data
+     * @param mixed $data
      *
      * @return AbstractParentNode
      *

@@ -6,11 +6,6 @@ namespace Saxulum\ElasticSearchQueryBuilder\Node;
 
 final class ArrayNode extends AbstractParentNode
 {
-    /**
-     * @param bool $allowSerializeEmpty
-     *
-     * @return ArrayNode
-     */
     public static function create(bool $allowSerializeEmpty = false): ArrayNode
     {
         $node = new self();
@@ -33,13 +28,9 @@ final class ArrayNode extends AbstractParentNode
     }
 
     /**
-     * @param AbstractNode $node
-     *
-     * @return $this
-     *
      * @throws \InvalidArgumentException
      */
-    public function add(AbstractNode $node)
+    public function add(AbstractNode $node): self
     {
         $node->setParent($this);
 
@@ -48,18 +39,12 @@ final class ArrayNode extends AbstractParentNode
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function serializeEmpty(): array
     {
         return [];
     }
 
-    /**
-     * @return array|null
-     */
-    public function serialize()
+    public function serialize(): ?array
     {
         $serialized = [];
         foreach ($this->children as $child) {
@@ -67,17 +52,13 @@ final class ArrayNode extends AbstractParentNode
         }
 
         if ([] === $serialized) {
-            return;
+            return null;
         }
 
         return $serialized;
     }
 
-    /**
-     * @param array        $serialized
-     * @param AbstractNode $child
-     */
-    private function serializeChild(array &$serialized, AbstractNode $child)
+    private function serializeChild(array &$serialized, AbstractNode $child): void
     {
         if (null !== $serializedChild = $child->serialize()) {
             $serialized[] = $serializedChild;

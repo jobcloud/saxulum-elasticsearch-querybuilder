@@ -6,17 +6,8 @@ namespace Saxulum\ElasticSearchQueryBuilder\Node;
 
 final class FloatNode extends AbstractNode
 {
-    /**
-     * @var float|null
-     */
-    private $value;
+    private ?float $value;
 
-    /**
-     * @param float|null $value
-     * @param bool       $allowSerializeEmpty
-     *
-     * @return FloatNode
-     */
     public static function create(float $value = null, bool $allowSerializeEmpty = false): FloatNode
     {
         $node = new self();
@@ -28,13 +19,10 @@ final class FloatNode extends AbstractNode
 
     public function serializeEmpty()
     {
-        return;
+        return null;
     }
 
-    /**
-     * @return float|null
-     */
-    public function serialize()
+    public function serialize(): ?float
     {
         return $this->value;
     }

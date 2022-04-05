@@ -6,9 +6,6 @@ namespace Saxulum\ElasticSearchQueryBuilder\Node;
 
 final class NullNode extends AbstractNode
 {
-    /**
-     * @return NullNode
-     */
     public static function create(): NullNode
     {
         $node = new self();
@@ -19,11 +16,11 @@ final class NullNode extends AbstractNode
 
     public function serializeEmpty()
     {
-        return;
+        return null;
     }
 
     public function serialize()
     {
-        return;
+        return null;
     }
 }

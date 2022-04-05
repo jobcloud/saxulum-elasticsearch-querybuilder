@@ -13,10 +13,8 @@ use Saxulum\ElasticSearchQueryBuilder\Node\StringNode;
 
 final class ScalarToNodeConverter implements ScalarToNodeConverterInterface
 {
-    /**
-     * @var array
-     */
-    private $typeMapping = [
+    /** @var array<string, string> */
+    private array $typeMapping = [
         'boolean' => BoolNode::class,
         'double' => FloatNode::class,
         'integer' => IntNode::class,
@@ -24,9 +22,9 @@ final class ScalarToNodeConverter implements ScalarToNodeConverterInterface
     ];
 
     /**
-     * @param bool|float|int|null|string $value
-     * @param string                     $path
-     * @param bool                       $allowSerializeEmpty
+     * @param bool|float|int|null|string|object $value
+     * @param string                            $path
+     * @param bool                              $allowSerializeEmpty
      *
      * @return AbstractNode
      *

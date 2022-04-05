@@ -17,59 +17,59 @@ use Saxulum\ElasticSearchQueryBuilder\Node\StringNode;
  */
 class ScalarToNodeConverterTest extends TestCase
 {
-    public function testConvertBool()
+    public function testConvertBool(): void
     {
         $valueConverter = new ScalarToNodeConverter();
 
         self::assertInstanceOf(BoolNode::class, $valueConverter->convert(true));
     }
 
-    public function testConvertFloat()
+    public function testConvertFloat(): void
     {
         $valueConverter = new ScalarToNodeConverter();
 
         self::assertInstanceOf(FloatNode::class, $valueConverter->convert(1.234));
     }
 
-    public function testConvertInt()
+    public function testConvertInt(): void
     {
         $valueConverter = new ScalarToNodeConverter();
 
         self::assertInstanceOf(IntNode::class, $valueConverter->convert(1));
     }
 
-    public function testConvertNull()
+    public function testConvertNull(): void
     {
         $valueConverter = new ScalarToNodeConverter();
 
         self::assertInstanceOf(NullNode::class, $valueConverter->convert(null));
     }
 
-    public function testConvertString()
+    public function testConvertString(): void
     {
         $valueConverter = new ScalarToNodeConverter();
 
         self::assertInstanceOf(StringNode::class, $valueConverter->convert('string'));
     }
 
-    public function testConvertSetsDefaultIsAllowSerializeEmpty()
+    public function testConvertSetsDefaultIsAllowSerializeEmpty(): void
     {
         $valueConverter = new ScalarToNodeConverter();
 
         self::assertFalse($valueConverter->convert('string')->isAllowSerializeEmpty());
     }
 
-    public function testConvertSetsIsAllowSerializeEmpty()
+    public function testConvertSetsIsAllowSerializeEmpty(): void
     {
         $valueConverter = new ScalarToNodeConverter();
 
         self::assertTrue($valueConverter->convert('string', '', true)->isAllowSerializeEmpty());
     }
 
-    public function testConvertWithUnsupportedValueExpectException()
+    public function testConvertWithUnsupportedValueExpectException(): void
     {
-        self::expectException(\InvalidArgumentException::class);
-        self::expectExceptionMessage('Type DateTime is not supported, at path dates[0]');
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Type DateTime is not supported, at path dates[0]');
 
         $valueConverter = new ScalarToNodeConverter();
         $valueConverter->convert(new \DateTime(), 'dates[0]');

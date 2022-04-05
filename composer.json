@@ -1,19 +1,36 @@
 {
-  "name": "jobcloud/saxulum-elasticsearch-querybuilder",
-  "type": "library",
-  "description": "A query builder for elasticsearch",
-  "keywords": ["elasticsearch", "querybuilder", "query"],
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Dominik Zogg",
-      "email": "dominik.zogg@gmail.com"
+    "name": "jobcloud/saxulum-elasticsearch-querybuilder",
+    "type": "library",
+    "description": "A query builder for elasticsearch",
+    "keywords": [
+        "elasticsearch",
+        "querybuilder",
+        "query"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dominik Zogg",
+            "email": "dominik.zogg@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.5.4",
+        "phpunit/phpunit": "^9.5.20",
+        "squizlabs/php_codesniffer": "^3.6.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Saxulum\\ElasticSearchQueryBuilder\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Saxulum\\Tests\\ElasticSearchQueryBuilder\\": "tests"
+        }
     }
-  ],
-  "require": {
-    "php": "~7.0|^8.1"
-  },
-  "autoload": {
-    "psr-4": { "Saxulum\\ElasticSearchQueryBuilder\\": "src" }
-  }
 }

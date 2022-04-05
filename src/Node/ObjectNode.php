@@ -6,11 +6,6 @@ namespace Saxulum\ElasticSearchQueryBuilder\Node;
 
 final class ObjectNode extends AbstractParentNode implements ObjectNodeSerializeInterface
 {
-    /**
-     * @param bool $allowSerializeEmpty
-     *
-     * @return ObjectNode
-     */
     public static function create(bool $allowSerializeEmpty = false): ObjectNode
     {
         $node = new self();
@@ -33,14 +28,9 @@ final class ObjectNode extends AbstractParentNode implements ObjectNodeSerialize
     }
 
     /**
-     * @param string       $key
-     * @param AbstractNode $node
-     *
-     * @return $this
-     *
      * @throws \InvalidArgumentException
      */
-    public function add(string $key, AbstractNode $node)
+    public function add(string $key, AbstractNode $node): self
     {
         if (isset($this->children[$key])) {
             throw new \InvalidArgumentException(sprintf('There is already a node with key %s!', $key));
@@ -53,37 +43,26 @@ final class ObjectNode extends AbstractParentNode implements ObjectNodeSerialize
         return $this;
     }
 
-    /**
-     * @return \stdClass
-     */
     public function serializeEmpty(): \stdClass
     {
         return new \stdClass();
     }
 
-    /**
-     * @return \stdClass|null
-     */
-    public function serialize()
+    public function serialize(): ?\stdClass
     {
         $serialized = new \stdClass();
         foreach ($this->children as $key => $child) {
-            $this->serializeChild($serialized, $key, $child);
+            $this->serializeChild($serialized, (string) $key, $child);
         }
 
         if ([] === (array) $serialized) {
-            return;
+            return null;
         }
 
         return $serialized;
     }
 
-    /**
-     * @param \stdClass    $serialized
-     * @param string       $key
-     * @param AbstractNode $child
-     */
-    private function serializeChild(\stdClass $serialized, $key, AbstractNode $child)
+    private function serializeChild(\stdClass $serialized, string $key, AbstractNode $child): void
     {
         if (null !== $serializedChild = $child->serialize()) {
             $serialized->$key = $serializedChild;
@@ -92,11 +71,6 @@ final class ObjectNode extends AbstractParentNode implements ObjectNodeSerialize
         }
     }
 
-    /**
-     * @param bool $beautify
-     *
-     * @return string
-     */
     public function json(bool $beautify = false): string
     {
         if (null === $serialized = $this->serialize()) {

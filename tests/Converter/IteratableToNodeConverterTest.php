@@ -19,7 +19,7 @@ use Saxulum\ElasticSearchQueryBuilder\Node\StringNode;
  */
 class IteratableToNodeConverterTest extends TestCase
 {
-    public function testConvert()
+    public function testConvert(): void
     {
         $iteratableConverter = new IteratableToNodeConverter($this->getScalarToNodeConverter());
 
@@ -80,7 +80,7 @@ EOD;
         self::assertSame($expected, $node->json(true));
     }
 
-    public function testConvertWithAllowEmptySerialze()
+    public function testConvertWithAllowEmptySerialize(): void
     {
         $iteratableConverter = new IteratableToNodeConverter($this->getScalarToNodeConverter());
 
@@ -95,10 +95,10 @@ EOD;
         self::assertEquals($expected, $node->json(true));
     }
 
-    public function testWithoutArrayOrTraversableExpectException()
+    public function testWithoutArrayOrTraversableExpectException(): void
     {
-        self::expectException(\InvalidArgumentException::class);
-        self::expectExceptionMessage('Params need to be array or Traversable');
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Parameters need to be iterable.');
 
         $iteratableConverter = new IteratableToNodeConverter($this->getScalarToNodeConverter());
         $iteratableConverter->convert(new \DateTime());
@@ -106,16 +106,13 @@ EOD;
 
     public function testWithUnsupportedValueExpectException()
     {
-        self::expectException(\InvalidArgumentException::class);
-        self::expectExceptionMessage('Type DateTime is not supported, at path dates[0]');
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Type DateTime is not supported, at path dates[0]');
 
         $iteratableConverter = new IteratableToNodeConverter($this->getScalarToNodeConverter());
         $iteratableConverter->convert(['dates' => [new \DateTime()]]);
     }
 
-    /**
-     * @return ScalarToNodeConverterInterface
-     */
     private function getScalarToNodeConverter(): ScalarToNodeConverterInterface
     {
         /** @var ScalarToNodeConverterInterface|\PHPUnit_Framework_MockObject_MockObject $scalarToNodeConverter */
@@ -151,7 +148,8 @@ EOD;
                 throw new \InvalidArgumentException(
                     sprintf(
                         'Type %s is not supported, at path %s',
-                        is_object($value) ? get_class($value) : $type, $path
+                        is_object($value) ? get_class($value) : $type,
+                        $path
                     )
                 );
             }

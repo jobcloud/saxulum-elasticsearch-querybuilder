@@ -6,17 +6,8 @@ namespace Saxulum\ElasticSearchQueryBuilder\Node;
 
 final class BoolNode extends AbstractNode
 {
-    /**
-     * @var bool|null
-     */
-    private $value;
+    private ?bool $value;
 
-    /**
-     * @param bool|null $value
-     * @param bool      $allowSerializeEmpty
-     *
-     * @return BoolNode
-     */
     public static function create(bool $value = null, bool $allowSerializeEmpty = false): BoolNode
     {
         $node = new self();
@@ -28,13 +19,10 @@ final class BoolNode extends AbstractNode
 
     public function serializeEmpty()
     {
-        return;
+        return null;
     }
 
-    /**
-     * @return bool|null
-     */
-    public function serialize()
+    public function serialize(): ?bool
     {
         return $this->value;
     }

@@ -8,7 +8,7 @@ final class BoolNode extends AbstractNode
 {
     private ?bool $value;
 
-    public static function create(bool $value = null, bool $allowSerializeEmpty = false): BoolNode
+    public static function create(?bool $value = null, bool $allowSerializeEmpty = false): BoolNode
     {
         $node = new self();
         $node->value = $value;

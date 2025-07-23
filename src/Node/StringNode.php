@@ -8,7 +8,7 @@ final class StringNode extends AbstractNode
 {
     private ?string $value;
 
-    public static function create(string $value = null, bool $allowSerializeEmpty = false): StringNode
+    public static function create(?string $value = null, bool $allowSerializeEmpty = false): StringNode
     {
         $node = new self();
         $node->value = $value;

@@ -8,7 +8,7 @@ final class FloatNode extends AbstractNode
 {
     private ?float $value;
 
-    public static function create(float $value = null, bool $allowSerializeEmpty = false): FloatNode
+    public static function create(?float $value = null, bool $allowSerializeEmpty = false): FloatNode
     {
         $node = new self();
         $node->value = $value;

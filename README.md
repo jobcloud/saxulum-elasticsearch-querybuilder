@@ -12,7 +12,7 @@
 
 ## Requirements
 
- * php: ^7.0|^8.0
+ * php: ^8.0
 
 ## Suggests
 

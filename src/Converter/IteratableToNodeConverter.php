@@ -11,21 +11,14 @@ use Saxulum\ElasticSearchQueryBuilder\Node\ObjectNode;
 
 final class IteratableToNodeConverter implements IteratableToNodeConverterInterface
 {
-    private ScalarToNodeConverterInterface $scalarToNodeConverter;
-
-    public function __construct(ScalarToNodeConverterInterface $scalarToNodeConverter)
+    public function __construct(private ScalarToNodeConverterInterface $scalarToNodeConverter)
     {
-        $this->scalarToNodeConverter = $scalarToNodeConverter;
     }
 
     /**
-     * @param mixed  $data
-     * @param string $path
-     * @param bool   $allowSerializeEmpty
      * @return ArrayNode|ObjectNode
-     * @throws \InvalidArgumentException
      */
-    public function convert($data, string $path = '', bool $allowSerializeEmpty = false): AbstractParentNode
+    public function convert(mixed $data, string $path = '', bool $allowSerializeEmpty = false): AbstractParentNode
     {
         if (!is_iterable($data)) {
             throw new \InvalidArgumentException('Parameters need to be iterable.');
@@ -87,14 +80,7 @@ final class IteratableToNodeConverter implements IteratableToNodeConverterInterf
         return $parentNode;
     }
 
-    /**
-     * @param mixed  $value
-     * @param string $path
-     * @param bool   $allowSerializeEmpty
-     *
-     * @return AbstractNode
-     */
-    private function getNode($value, string $path, bool $allowSerializeEmpty): AbstractNode
+    private function getNode(mixed $value, string $path, bool $allowSerializeEmpty): AbstractNode
     {
         if (is_iterable($value)) {
             return $this->convert($value, $path, $allowSerializeEmpty);

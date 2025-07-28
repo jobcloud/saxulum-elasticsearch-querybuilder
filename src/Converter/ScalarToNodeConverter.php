@@ -21,16 +21,7 @@ final class ScalarToNodeConverter implements ScalarToNodeConverterInterface
         'string' => StringNode::class,
     ];
 
-    /**
-     * @param bool|float|int|null|string|object $value
-     * @param string                            $path
-     * @param bool                              $allowSerializeEmpty
-     *
-     * @return AbstractNode
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function convert($value, string $path = '', bool $allowSerializeEmpty = false): AbstractNode
+    public function convert(mixed $value, string $path = '', bool $allowSerializeEmpty = false): AbstractNode
     {
         if (null === $value) {
             return NullNode::create();
